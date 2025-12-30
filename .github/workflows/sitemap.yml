@@ -1,0 +1,21 @@
+name: Generate sitemap
+on:
+  push:
+    branches: [ main ]
+permissions:
+  contents: write
+jobs:
+  sitemap:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: cicirello/generate-sitemap@v1.10.2
+      with:
+        base-url-path: 'https://vishala5000.github.io/Daily-Bible-Verse-Shine'
+    - name: Commit sitemap
+      run: |
+        git config user.name "github-actions[bot]"
+        git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+        git add sitemap.xml
+        git commit -m "Update sitemap [skip ci]" || echo "No changes"
+        git push
